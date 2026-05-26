@@ -45,10 +45,6 @@ public class GestorBaseDatos {
         cargarDesdeArchivo();
     }
 
-    // ─────────────────────────────────────────────
-    // Lectura / escritura en disco
-    // ─────────────────────────────────────────────
-
     /**
      * Lee todos los documentos del archivo JSON y los inserta en el árbol AVL.
      * Si el archivo no existe o está vacío, el árbol queda vacío.
@@ -79,10 +75,6 @@ public class GestorBaseDatos {
             throw new RuntimeException("Error al persistir en archivo: " + e.getMessage(), e);
         }
     }
-
-    // ─────────────────────────────────────────────
-    // Operaciones CRUD
-    // ─────────────────────────────────────────────
 
     /**
      * Inserta un documento nuevo o reemplaza uno existente con el mismo id.
@@ -176,10 +168,6 @@ public class GestorBaseDatos {
         guardarEnArchivo();
         return true;
     }
-
-    // ─────────────────────────────────────────────
-    // Consultas de estado
-    // ─────────────────────────────────────────────
 
     /**
      * Verifica si existe un documento con el id dado.

@@ -27,10 +27,6 @@ public class AVLArbol<C extends Comparable<C>, V> {
     /** Número total de nodos en el árbol. */
     private int tamanio = 0;
 
-    // ─────────────────────────────────────────────
-    // Métodos auxiliares de altura y balance
-    // ─────────────────────────────────────────────
-
     /**
      * Devuelve la altura de un nodo, o 0 si es nulo.
      * @param nodo El nodo a consultar
@@ -60,10 +56,6 @@ public class AVLArbol<C extends Comparable<C>, V> {
             nodo.setAltura(1 + Math.max(obtenerAltura(nodo.getIzquierdo()), obtenerAltura(nodo.getDerecho())));
         }
     }
-
-    // ─────────────────────────────────────────────
-    // Rotaciones
-    // ─────────────────────────────────────────────
 
     /**
      * Rotación simple a la derecha.
@@ -102,10 +94,6 @@ public class AVLArbol<C extends Comparable<C>, V> {
 
         return y;
     }
-
-    // ─────────────────────────────────────────────
-    // Inserción
-    // ─────────────────────────────────────────────
 
     /**
      * Inserta un par clave-valor en el árbol.
@@ -163,10 +151,6 @@ public class AVLArbol<C extends Comparable<C>, V> {
         return nodo;
     }
 
-    // ─────────────────────────────────────────────
-    // Búsqueda
-    // ─────────────────────────────────────────────
-
     /**
      * Busca un valor por su clave.
      * @param clave Clave a buscar
@@ -188,10 +172,6 @@ public class AVLArbol<C extends Comparable<C>, V> {
         if (comparacion > 0) return buscarNodo(nodo.getDerecho(), clave);
         return nodo;
     }
-
-    // ─────────────────────────────────────────────
-    // Eliminación
-    // ─────────────────────────────────────────────
 
     /**
      * Elimina un nodo por su clave y rebalancea el árbol.
@@ -268,9 +248,6 @@ public class AVLArbol<C extends Comparable<C>, V> {
         return actual;
     }
 
-    // ─────────────────────────────────────────────
-    // Consultas y utilidades
-    // ─────────────────────────────────────────────
 
     /**
      * Verifica si una clave existe en el árbol.

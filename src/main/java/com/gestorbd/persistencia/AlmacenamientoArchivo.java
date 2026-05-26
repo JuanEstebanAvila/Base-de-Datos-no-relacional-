@@ -37,10 +37,6 @@ public class AlmacenamientoArchivo implements RepositorioDocumentos {
         cargarDesdeArchivo();
     }
 
-    // ─────────────────────────────────────────────
-    // Lectura / escritura en disco
-    // ─────────────────────────────────────────────
-
     /**
      * Lee los documentos del archivo si existe y tiene contenido.
      */
@@ -65,10 +61,6 @@ public class AlmacenamientoArchivo implements RepositorioDocumentos {
             throw new RuntimeException("Error al persistir en archivo: " + e.getMessage(), e);
         }
     }
-
-    // ─────────────────────────────────────────────
-    // Implementación de RepositorioDocumentos
-    // ─────────────────────────────────────────────
 
     @Override
     public void guardar(Documento documento) {
