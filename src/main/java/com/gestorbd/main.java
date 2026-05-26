@@ -8,7 +8,7 @@ package com.gestorbd;
  * Cuando la interfaz gráfica esté implementada, este método
  * delegará el inicio a InterfazUsuario.
  */
-public class App {
+public class main {
 
     public static void main(String[] args) {
         System.out.println();
