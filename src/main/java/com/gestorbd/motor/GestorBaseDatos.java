@@ -137,7 +137,7 @@ public class GestorBaseDatos {
             throw new IllegalArgumentException("El documento y su ID no pueden ser nulos");
         }
         if (!indice.contiene(documento.getId())) return false;
-        indice.insertar(documento.getId(), documento);
+        indice.actualizar(documento.getId(), documento);
         guardarEnArchivo();
         return true;
     }

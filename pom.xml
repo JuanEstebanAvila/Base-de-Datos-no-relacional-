@@ -63,7 +63,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.gestorbd.App</mainClass>
+                            <mainClass>com.gestorbd.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

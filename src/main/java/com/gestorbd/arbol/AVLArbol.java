@@ -94,10 +94,26 @@ public class AVLArbol<C extends Comparable<C>, V> {
 
         return y;
     }
-
+    
     /**
-     * Inserta un par clave-valor en el árbol.
-     * Si la clave ya existe, actualiza su valor.
+     * Actualiza el valor de un nodo existente sin alterar la estructura del arbol.
+     * A diferencia de insertar(), no lanza excepcion si la clave ya existe.
+     * @param clave
+     * @param valor
+     * @throws IllegalArgumentException si la clave NO existe en el árbol.
+     */
+    public void actualizar(C clave, V valor) {
+        AVLNodo<C, V> nodo = buscarNodo(raiz, clave);
+        if (nodo == null) {
+            throw new IllegalArgumentException(
+                "No existe ningún nodo con la clave: " + clave);
+        }
+        nodo.setValor(valor);
+    }
+    
+    /**
+     * Inserta una clave y valor en el árbol.
+     * Lanza excepción si la clave ya existe.
      * @param clave Clave a insertar
      * @param valor Valor asociado
      */
