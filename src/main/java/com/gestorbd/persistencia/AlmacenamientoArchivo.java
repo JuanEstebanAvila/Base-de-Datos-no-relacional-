@@ -1,7 +1,6 @@
 package com.gestorbd.persistencia;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.gestorbd.modelo.Documento;
@@ -10,8 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
  * Implementación de RepositorioDocumentos que persiste los documentos
@@ -37,6 +34,7 @@ public class AlmacenamientoArchivo implements RepositorioDocumentos{
     /**
      * Lee todos los documentos del archivo JSON.
      * Devuelve lista vacia si el archivo no existe o esta vacio.
+     * @return 
      */
     public List<Documento> cargar() {
         if (!archivo.exists() || archivo.length() == 0) {
@@ -52,7 +50,9 @@ public class AlmacenamientoArchivo implements RepositorioDocumentos{
 
     /**
      * Escribe la lista completa de documentos en el archivo JSON.
+     * @param documentos
      */
+    @Override
     public void guardar(List<Documento> documentos) {
         try {
             mapeadorJson.writeValue(archivo, documentos);
