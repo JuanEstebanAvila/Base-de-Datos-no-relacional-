@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Gestor de colecciones de la base de datos NoSQL.
  *
- * Se encarga de administrar multiples colecciones (espacios de almacenamiento),
+ * Se encarga de administrar multiples colecciones
  * donde cada coleccion es un GestorBaseDatos independiente con su propio
  * archivo JSON y su propio arbol AVL en memoria.
  *
