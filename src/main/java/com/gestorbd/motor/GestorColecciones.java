@@ -97,12 +97,12 @@ public class GestorColecciones {
      * @return true si se creo exitosamente, false si ya existia.
      */
     public boolean crearColeccion(String nombre) {
+        //Primero valida que no exista un duplicado en la RAM con containsKey.
         if (colecciones.containsKey(nombre)) {
             return false; // Ya existe una coleccion con ese nombre
         }
 
-        // Construye la ruta de forma segura entre sistemas operativos
-        // Ejemplo: "data/usuarios.json"
+        // Construye la ruta 
         String rutaArchivo = new File(carpetaBase, nombre + ".json").getAbsolutePath();
 
         // Al instanciar GestorBaseDatos se crea el archivo y se inicia el arbol AVL
