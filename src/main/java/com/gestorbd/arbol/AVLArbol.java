@@ -121,9 +121,7 @@ public class AVLArbol<C extends Comparable<C>, V> {
         } else if (comparacion > 0) {
             nodo.setDerecho(insertarNodo(nodo.getDerecho(), clave, valor));
         } else {
-            // Clave duplicada: solo actualiza el valor
-            nodo.setValor(valor);
-            return nodo;
+            throw new IllegalArgumentException("Ya existe un nodo con la clave: " + clave);
         }
 
         actualizarAltura(nodo);
@@ -176,7 +174,7 @@ public class AVLArbol<C extends Comparable<C>, V> {
     /**
      * Elimina un nodo por su clave y rebalancea el árbol.
      * @param clave Clave a eliminar
-     * @return true si se eliminó, false si no existía
+     * @return true si se elimino, false si no existia
      */
     public boolean eliminar(C clave) {
         if (!contiene(clave)) return false;
@@ -186,7 +184,7 @@ public class AVLArbol<C extends Comparable<C>, V> {
     }
 
     /**
-     * Eliminación recursiva con rebalanceo tras cada llamada.
+     * Eliminacion recursiva con rebalanceo tras cada llamada.
      */
     private AVLNodo<C, V> eliminarNodo(AVLNodo<C, V> nodo, C clave) {
         if (nodo == null) return null;
@@ -204,13 +202,13 @@ public class AVLArbol<C extends Comparable<C>, V> {
                 if (temp == null) return null;    // Sin hijos
                 return temp;                      // Un solo hijo
             } else {
-                // Dos hijos: reemplazar con el sucesor inorden (mínimo del subárbol derecho)
+                // Dos hijos: reemplazar con el sucesor inorden (mas a la izquierda del subarbol derecho)
                 AVLNodo<C, V> sucesor = obtenerNodoMinimo(nodo.getDerecho());
                 nodo.setClave(sucesor.getClave());
                 nodo.setValor(sucesor.getValor());
                 nodo.setDerecho(eliminarNodo(nodo.getDerecho(), sucesor.getClave()));
             }
-        }
+        } 
 
         actualizarAltura(nodo);
         int balance = calcularBalance(nodo);

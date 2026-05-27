@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AVLNodo<C extends Comparable<C>, V> {
 
-    /** Hijo izquierdo del nodo (claves menores). */
+    /** Hijo izquierdo del nodo (claves menores). referencias de memoria ram*/
     private AVLNodo<C, V> izquierdo;
 
     /** Hijo derecho del nodo (claves mayores). */

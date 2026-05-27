@@ -1,18 +1,15 @@
 package com.gestorbd.motor;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.gestorbd.arbol.AVLArbol;
 import com.gestorbd.modelo.Documento;
+import com.gestorbd.persistencia.AlmacenamientoArchivo;
+import com.gestorbd.persistencia.RepositorioDocumentos;
 
 /**
  * Motor principal de la base de datos NoSQL.
@@ -28,8 +25,7 @@ import com.gestorbd.modelo.Documento;
  */
 public class GestorBaseDatos {
 
-    private final File archivo;
-    private final ObjectMapper mapeadorJson;
+    private final RepositorioDocumentos almacenamiento;
     private final AVLArbol<Integer, Documento> indice;
 
     /**
@@ -38,42 +34,26 @@ public class GestorBaseDatos {
      * @param rutaArchivo Ruta del archivo JSON donde se almacenan los datos.
      */
     public GestorBaseDatos(String rutaArchivo) {
-        this.archivo      = new File(rutaArchivo);
-        this.mapeadorJson = new ObjectMapper();
-        this.mapeadorJson.enable(SerializationFeature.INDENT_OUTPUT);
-        this.indice       = new AVLArbol<>();
+        this.almacenamiento = new AlmacenamientoArchivo(rutaArchivo);
+        this.indice         = new AVLArbol<>();
         cargarDesdeArchivo();
     }
 
     /**
-     * Lee todos los documentos del archivo JSON y los inserta en el árbol AVL.
-     * Si el archivo no existe o está vacío, el árbol queda vacío.
-     */
+    * Carga los documentos desde el archivo de almacenamiento 
+    * y los indexa en memoria para su rapida recuperacion.
+    */
     private void cargarDesdeArchivo() {
-        if (archivo.exists() && archivo.length() > 0) {
-            try {
-                List<Documento> documentos = mapeadorJson.readValue(
-                        archivo, new TypeReference<List<Documento>>() {});
-                for (Documento doc : documentos) {
-                    indice.insertar(doc.getId(), doc);
-                }
-            } catch (IOException e) {
-                // El árbol queda vacío si el archivo está corrupto
-            }
+        for (Documento doc : almacenamiento.cargar()) {
+            indice.insertar(doc.getId(), doc);
         }
     }
 
     /**
-     * Serializa todos los documentos del árbol al archivo JSON.
-     * Se llama automáticamente tras cada operación de escritura.
-     */
+    * Recupera todos los documentos y los guarda en el almacenamiento.
+    */
     private void guardarEnArchivo() {
-        try {
-            List<Documento> documentos = obtenerTodosLosDocumentos();
-            mapeadorJson.writeValue(archivo, documentos);
-        } catch (IOException e) {
-            throw new RuntimeException("Error al persistir en archivo: " + e.getMessage(), e);
-        }
+        almacenamiento.guardar(obtenerTodosLosDocumentos());
     }
 
     /**
@@ -83,6 +63,10 @@ public class GestorBaseDatos {
     public void guardar(Documento documento) {
         if (documento == null || documento.getId() == null) {
             throw new IllegalArgumentException("El documento y su ID no pueden ser nulos");
+        }
+        if (indice.contiene(documento.getId())){
+            throw new IllegalArgumentException("Ya existe un documento con el ID: " + documento.getId() +
+            ". Use actualizar() para modificar documentos existentes.");
         }
         indice.insertar(documento.getId(), documento);
         guardarEnArchivo();
