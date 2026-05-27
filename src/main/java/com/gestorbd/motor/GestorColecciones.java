@@ -51,7 +51,8 @@ public class GestorColecciones {
         this.carpetaBase = carpetaBase;
         this.colecciones = new HashMap<>();
 
-        // Crear la carpeta automaticamente si no existe
+        // Crear la carpeta automaticamente si no existe para no crearla a mano
+        // el que lo crea es mkdirs 
         File dir = new File(carpetaBase);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -70,12 +71,16 @@ public class GestorColecciones {
         File dir = new File(carpetaBase);
 
         // Filtrar solo los archivos con extension .json
+        //listFiles()listar el contenido de una carpeta. (devuelve los archivos y subcarpetas de la condicion)
+        // endsWith(".json")comprueba si un texto termina con una secuencia de caracteres determinada.
         File[] archivos = dir.listFiles((d, name) -> name.endsWith(".json"));
 
         if (archivos != null) {
             for (File archivo : archivos) {
                 // Quitar la extension .json para obtener el nombre de la coleccion
                 String nombreColeccion = archivo.getName().replace(".json", "");
+                //getAbsolutePath() devuelve la ruta completa de un archivo o directorio, 
+                //incluyendo las carpetas raíz
                 GestorBaseDatos gestor = new GestorBaseDatos(archivo.getAbsolutePath());
                 colecciones.put(nombreColeccion, gestor);
             }
