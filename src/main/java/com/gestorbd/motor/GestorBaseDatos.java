@@ -42,6 +42,8 @@ public class GestorBaseDatos {
     /**
     * Carga los documentos desde el archivo de almacenamiento 
     * y los indexa en memoria para su rapida recuperacion.
+    * 
+    * complejidad: O(k log k)
     */
     private void cargarDesdeArchivo() {
         for (Documento doc : almacenamiento.cargar()) {
@@ -59,6 +61,8 @@ public class GestorBaseDatos {
     /**
      * Inserta un documento nuevo o reemplaza uno existente con el mismo id.
      * @param documento Documento a guardar (no puede ser nulo ni tener id nulo).
+     * 
+     * complejidad: O(log n)
      */
     public void guardar(Documento documento) {
         if (documento == null || documento.getId() == null) {
@@ -76,6 +80,8 @@ public class GestorBaseDatos {
      * Busca un documento por su id usando el árbol AVL (O(log n)).
      * @param id Identificador del documento.
      * @return Optional con el documento si existe, vacío si no.
+     * 
+     * complejidad: O(log n)
      */
     public Optional<Documento> buscarPorId(Integer id) {
         return indice.buscar(id);
@@ -100,6 +106,8 @@ public class GestorBaseDatos {
      * @param nombreCampo Nombre del campo JSON a evaluar.
      * @param valor Texto que debe contener el campo.
      * @return Lista de documentos coincidentes.
+     * 
+     * complejidad: O(n)
      */
     public List<Documento> buscarPorCampo(String nombreCampo, String valor) {
         return buscarPorCondicion(doc -> {
@@ -116,6 +124,8 @@ public class GestorBaseDatos {
      * @param nombreCampo Nombre del campo JSON a evaluar.
      * @param valor Valor exacto que debe tener el campo.
      * @return Lista de documentos coincidentes.
+     * 
+     * complejidad: O(n)
      */
     public List<Documento> buscarPorCampoExacto(String nombreCampo, String valor) {
         return buscarPorCondicion(doc -> {
@@ -126,11 +136,27 @@ public class GestorBaseDatos {
             return campo.asText().equals(valor);
         });
     }
+    
+    /**
+     * Busca todos los documentos cuyo ID este dentro del rango [idMin, idMax].
+     * se encarga el arbol AVL para la complejidad O(log n + m).
+     *
+     * @param idMin ID minimo del rango (inclusive).
+     * @param idMax ID maximo del rango (inclusive).
+     * @return Lista de documentos encontrados en el rango.
+     * 
+     * complejidad: O(log n + m)
+     */
+    public List<Documento> buscarPorRangoId(Integer idMin, Integer idMax) {
+        return indice.buscarPorRango(idMin, idMax);
+    }
 
     /**
      * Actualiza un documento existente. No crea uno nuevo si no existe.
      * @param documento Documento con los nuevos datos (debe tener id existente).
      * @return true si se actualizó, false si el id no existe.
+     * 
+     * complejidad: O(log n)
      */
     public boolean actualizar(Documento documento) {
         if (documento == null || documento.getId() == null) {
@@ -146,6 +172,8 @@ public class GestorBaseDatos {
      * Elimina un documento por su id del árbol y del archivo.
      * @param id Identificador del documento a eliminar.
      * @return true si se eliminó, false si no existía.
+     * 
+     * complejidad: O(log n)
      */
     public boolean eliminarPorId(Integer id) {
         if (!indice.eliminar(id)) return false;
@@ -165,6 +193,8 @@ public class GestorBaseDatos {
     /**
      * Devuelve todos los documentos ordenados por id (recorrido inorden del AVL).
      * @return Lista de todos los documentos en orden ascendente de id.
+     * 
+     * complejidad: O(n)
      */
     public List<Documento> obtenerTodosLosDocumentos() {
         List<Documento> documentos = new ArrayList<>();

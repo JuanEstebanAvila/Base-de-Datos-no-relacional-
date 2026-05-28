@@ -65,7 +65,7 @@ public class GestorColecciones {
      * Escanea la carpeta base al arrancar y levanta un GestorBaseDatos
      * por cada archivo .json que encuentre.
      * Esto garantiza que las colecciones persisten entre reinicios del programa.
-     * Complejidad: O(k log k) donde k es el numero de documentos en cada archivo.
+     * Complejidad: O(k log k) k es el numero de documentos en cada archivo.
      */
     private void cargarColeccionesExistentes() {
         File dir = new File(carpetaBase);

@@ -101,6 +101,8 @@ public class AVLArbol<C extends Comparable<C>, V> {
      * @param clave
      * @param valor
      * @throws IllegalArgumentException si la clave NO existe en el árbol.
+     * 
+     * complejidad:O(log n)
      */
     public void actualizar(C clave, V valor) {
         AVLNodo<C, V> nodo = buscarNodo(raiz, clave);
@@ -116,6 +118,9 @@ public class AVLArbol<C extends Comparable<C>, V> {
      * Lanza excepción si la clave ya existe.
      * @param clave Clave a insertar
      * @param valor Valor asociado
+     * 
+     * complejidad:O(log n)
+     * se baja por el arbol buscando la posicion correcta para el nuevo nodo
      */
     public void insertar(C clave, V valor) {
         raiz = insertarNodo(raiz, clave, valor);
@@ -169,6 +174,9 @@ public class AVLArbol<C extends Comparable<C>, V> {
      * Busca un valor por su clave.
      * @param clave Clave a buscar
      * @return Optional con el valor si existe, vacío si no
+     * 
+     * complejidad:O(log n). 
+     * En cada paso del camino, se compara la clave y se descarta la mitad del arbol
      */
     public Optional<V> buscar(C clave) {
         AVLNodo<C, V> nodo = buscarNodo(raiz, clave);
@@ -186,11 +194,61 @@ public class AVLArbol<C extends Comparable<C>, V> {
         if (comparacion > 0) return buscarNodo(nodo.getDerecho(), clave);
         return nodo;
     }
+    
+    /**
+     * Busca todos los valores cuyas claves esten dentro del rango [min, max].
+     * poda ramas que no pueden contener resultados validos, evitando recorrer todo el arbol.
+     * Complejidad: O(log n + m) donde m es el numero de elementos encontrados.
+     *
+     * @param min Clave minima del rango (inclusive).
+     * @param max Clave maxima del rango (inclusive).
+     * @return Lista de valores cuyas claves estan en el rango.
+     * 
+     * complejidad: O(log n + m)
+     * tardamos O (log n) en encontrar el primer elemento que entra en el rango (el punto de partida)gracias al arbol,
+     * luego cuesta O(m) recolectar de forma secuencial los m elementos que cumplen la condicion.
+     */
+    public List<V> buscarPorRango(C min, C max) {
+        List<V> resultado = new ArrayList<>();
+        buscarPorRangoNodo(raiz, min, max, resultado);
+        return resultado;
+    }
+
+    /**
+     * Recorre recursivamente el arbol podando ramas fuera del rango.
+     *
+     * @param nodo    Nodo actual del recorrido.
+     * @param min     Clave minima del rango.
+     * @param max     Clave maxima del rango.
+     * @param resultado Lista donde se acumulan los valores encontrados.
+     */
+    
+    private void buscarPorRangoNodo(AVLNodo<C, V> nodo, C min, C max, List<V> resultado) {
+        if (nodo == null) {
+            return;
+        }
+        // Si la clave actual es mayor al minimo, puede haber resultados a la izquierda
+        if (nodo.getClave().compareTo(min) > 0) {
+            buscarPorRangoNodo(nodo.getIzquierdo(), min, max, resultado);
+        }
+        // Si la clave esta dentro del rango, se agrega al resultado
+        if (nodo.getClave().compareTo(min) >= 0 && nodo.getClave().compareTo(max) <= 0) {
+            resultado.add(nodo.getValor());
+        }
+        // Si la clave actual es menor al maximo, puede haber resultados a la derecha
+        if (nodo.getClave().compareTo(max) < 0) {
+            buscarPorRangoNodo(nodo.getDerecho(), min, max, resultado);
+        }
+    }
 
     /**
      * Elimina un nodo por su clave y rebalancea el árbol.
      * @param clave Clave a eliminar
      * @return true si se elimino, false si no existia
+     * 
+     * comlejidad: O(log n)
+     * igual que la insercion; buscas el nodo a eliminar,
+     * se quita, y si es necesario, se rebalances el arbol subiendo hasta la raiz
      */
     public boolean eliminar(C clave) {
         if (!contiene(clave)) return false;
@@ -267,6 +325,8 @@ public class AVLArbol<C extends Comparable<C>, V> {
      * Verifica si una clave existe en el árbol.
      * @param clave Clave a verificar
      * @return true si existe, false si no
+     * 
+     * complejidad: O(log n)
      */
     public boolean contiene(C clave) {
         return buscarNodo(raiz, clave) != null;
@@ -275,6 +335,8 @@ public class AVLArbol<C extends Comparable<C>, V> {
     /**
      * Devuelve todas las claves del árbol ordenadas (recorrido inorden).
      * @return Lista de claves en orden ascendente
+     * 
+     * complejidad: O(n)
      */
     public List<C> obtenerTodasLasClaves() {
         List<C> claves = new ArrayList<>();
@@ -327,6 +389,8 @@ public class AVLArbol<C extends Comparable<C>, V> {
 
     /**
      * Elimina todos los nodos del árbol y reinicia el tamaño.
+     * 
+     * complejidad: O(1)
      */
     public void limpiar() {
         raiz = null;
