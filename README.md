@@ -1,6 +1,6 @@
-# Motor de Base de Datos NoSQL con Arboles AVL
+# Motor de Base de Datos NoRelacional con Arboles AVL
 
-Motor de base de datos no relacional implementado en Java que utiliza **arboles AVL autobalanceados** para indexacion y busqueda eficiente. Incluye interfaz grafica (Swing) e interfaz de linea de comandos (REPL).
+Motor de base de datos no relacional implementado en Java que utiliza **arboles AVL autobalanceados** para indexacion y busqueda eficiente. Incluye interfaz grafica (Swing).
 
 ---
 
@@ -11,7 +11,6 @@ Motor de base de datos no relacional implementado en Java que utiliza **arboles 
 - Busqueda por campo exacto y por rango de IDs
 - Persistencia automatica en archivos JSON
 - Interfaz grafica minimalista con visualizacion del arbol AVL
-- Interfaz de linea de comandos (REPL)
 
 ---
 
