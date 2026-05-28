@@ -147,7 +147,7 @@ public class GuiBaseDatos extends JFrame {
         JScrollPane scrollContenidos = new JScrollPane(areaContenidos);
         scrollContenidos.setBorder(BorderFactory.createTitledBorder("Documentos Persistidos (JSON)"));
 
-        // ── Ensamble con divisores ─────────────────────────────────────────
+        //  Ensamble con divisores 
         JSplitPane divisorSuperior = new JSplitPane(
                 JSplitPane.HORIZONTAL_SPLIT, panelConsola, panelArbol);
         divisorSuperior.setDividerLocation(550);
@@ -262,7 +262,7 @@ public class GuiBaseDatos extends JFrame {
         }
     }
 
-    // ── Refresco de pantalla ───────────────────────────────────────────────
+    // Refresco de pantalla 
 
     /**
      * Actualiza la Zona 2 (documentos) y la Zona 3 (arbol AVL)
