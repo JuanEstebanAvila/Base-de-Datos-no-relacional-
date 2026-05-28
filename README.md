@@ -1,6 +1,6 @@
 # Motor de Base de Datos NoSQL con Arboles AVL
 
-Motor de base de datos no relacional implementado en Java que utiliza **arboles AVL autobalanceados** para indexacion y busqueda eficiente. Incluye interfaz grafica (Swing) e interfaz de linea de comandos (REPL).
+Motor de base de datos no relacional implementado en Java que utiliza **arboles AVL autobalanceados** para indexacion y busqueda eficiente. Incluye interfaz grafica (Swing).
 
 ---
 
@@ -11,7 +11,6 @@ Motor de base de datos no relacional implementado en Java que utiliza **arboles 
 - Busqueda por campo exacto y por rango de IDs
 - Persistencia automatica en archivos JSON
 - Interfaz grafica minimalista con visualizacion del arbol AVL
-- Interfaz de linea de comandos (REPL)
 
 ---
 
@@ -61,7 +60,7 @@ Los archivos JSON de cada coleccion se guardan en la carpeta `data_db/` en la ra
 
 **1. Descargar el proyecto**
 
-Descarga el archivo `.zip` del repositorio desde GitHub haciendo clic en `Code` → `Download ZIP` y descomprimelo en la ubicacion que prefieras.
+Descarga el archivo `.zip` del repositorio desde GitHub haciendo clic en `Code` → `Download ZIP` y descomprimirlo.
 
 **2. Importar en el IDE**
 
@@ -73,7 +72,7 @@ El IDE detectara automaticamente el proyecto Maven y descargara las dependencias
 
 **3. Ejecutar el programa**
 
-Abre el archivo `Main.java` ubicado en `src/main/java/com/gestorbd/` y ejecutalo:
+Abre el archivo `Main.java` ubicado en `src/main/java/gestorbd/` y ejecutalo:
 
 - **NetBeans**: clic derecho sobre `Main.java` → `Run File`
 - **IntelliJ IDEA**: clic en el boton verde ▶ junto al metodo `main`
@@ -92,7 +91,7 @@ El proyecto incluye dos colecciones de ejemplo listas para usar en la carpeta `d
 | `prueba 1.json` | prueba 1 | nombre, edad, codigo |
 | `prueba 2.json` | prueba 2 | nombre, edad, codigo |
 
-Al abrir el programa estas colecciones ya apareceran disponibles en el selector. Para explorarlas selecciona una con el boton `USE` y prueba los comandos de busqueda:
+Al abrir el programa estas colecciones ya apareceran disponibles en el selector. Para explorarlas seleccione una con el boton `USE` y prueba los comandos de busqueda:
 
 ```
 USE prueba 1
@@ -258,4 +257,7 @@ Donde `n` es el numero de documentos, `m` es el numero de resultados del rango y
 
 ## Autores
 
-Desarrollado como proyecto academico para la asignatura de Estructuras de Datos.
+Desarrollado como proyecto academico para la asignatura de Ciencias de la Computacion I.
+
+Julian David Muñoz Revelo - 20251020042
+Juan Esteban Avila Trujillo - 20251020054
