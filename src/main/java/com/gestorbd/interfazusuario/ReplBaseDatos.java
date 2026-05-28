@@ -65,7 +65,7 @@ public class ReplBaseDatos {
         System.out.println("  LISTAR_COLECCIONES");
         System.out.println("  USE <nombre_coleccion>  (Para empezar a operar datos)");
         System.out.println("Comandos de datos (Requiere haber ejecutado USE primero):");
-        System.out.println("  INSERTAR <id> <json>");
+        System.out.println("  INSERTAR id {json} ");
         System.out.println("  BUSCAR <id>");
         System.out.println("  BUSCAR DONDE <campo> = <valor>");
         System.out.println("  BUSCAR_RANGO <id_min> <id_max>");
