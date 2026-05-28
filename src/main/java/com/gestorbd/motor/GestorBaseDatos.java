@@ -252,4 +252,15 @@ public class GestorBaseDatos {
     public AVLArbol<Integer, Documento> obtenerIndice() {
         return indice;
     }
+    
+    /**
+     * Devuelve la estructura visual del arbol AVL en texto estructurado. Usado
+     * por la interfaz grafica para mostrar el arbol en pantalla. Complejidad:
+     * O(n)
+     *
+     * @return String con la representacion visual del arbol.
+     */
+    public String obtenerEstructuraArbolTexto() {
+        return indice.obtenerEstructuraTexto();
+    }
 }

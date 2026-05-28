@@ -367,6 +367,48 @@ public class AVLArbol<C extends Comparable<C>, V> {
             System.out.printf("[%d]: %s%n", i, array.get(i));
         }
     }
+    
+    /**
+     * Genera una representacion visual del arbol en texto estructurado. Util
+     * para mostrar la jerarquia de nodos en la interfaz grafica. Complejidad:
+     * O(n)
+     *
+     * @return String con la estructura del arbol lista para mostrar en
+     * pantalla.
+     */
+    public String obtenerEstructuraTexto() {
+        StringBuilder sb = new StringBuilder();
+        construirTextoArbol(raiz, sb, "", true);
+        return sb.toString();
+    }
+
+    /**
+     * Recorre recursivamente el arbol construyendo la representacion en texto.
+     * Usa prefijos para simular las ramas del arbol visualmente.
+     *
+     * @param nodo Nodo actual del recorrido.
+     * @param sb StringBuilder donde se acumula el resultado.
+     * @param prefijo Prefijo de indentacion para el nivel actual.
+     * @param esUltimo Indica si el nodo es el ultimo hijo de su padre.
+     */
+    private void construirTextoArbol(AVLNodo<C, V> nodo, StringBuilder sb, String prefijo, boolean esUltimo) {
+        if (nodo != null) {
+            sb.append(prefijo)
+                    .append(esUltimo ? "└── " : "├── ")
+                    .append("ID: ").append(nodo.getClave())
+                    .append("\n");
+
+            // Cambiar el prefijo para los hijos segun si hay mas ramas
+            String nuevoPrefijo = prefijo + (esUltimo ? "    " : "│   ");
+
+            if (nodo.getIzquierdo() != null) {
+                construirTextoArbol(nodo.getIzquierdo(), sb, nuevoPrefijo, nodo.getDerecho() == null);
+            }
+            if (nodo.getDerecho() != null) {
+                construirTextoArbol(nodo.getDerecho(), sb, nuevoPrefijo, true);
+            }
+        }
+    }
 
     /**
      * Rellena el array con nodos según índices de heap binario.
