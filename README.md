@@ -1,6 +1,6 @@
-# Motor de Base de Datos NoRelacional con Arboles AVL
+# Motor de Base de Datos NoSQL con Arboles AVL
 
-Motor de base de datos no relacional implementado en Java que utiliza **arboles AVL autobalanceados** para indexacion y busqueda eficiente. Incluye interfaz grafica (Swing).
+Motor de base de datos no relacional implementado en Java que utiliza **arboles AVL autobalanceados** para indexacion y busqueda eficiente. Incluye interfaz grafica (Swing) e interfaz de linea de comandos (REPL).
 
 ---
 
@@ -11,6 +11,7 @@ Motor de base de datos no relacional implementado en Java que utiliza **arboles 
 - Busqueda por campo exacto y por rango de IDs
 - Persistencia automatica en archivos JSON
 - Interfaz grafica minimalista con visualizacion del arbol AVL
+- Interfaz de linea de comandos (REPL)
 
 ---
 
@@ -52,36 +53,54 @@ Los archivos JSON de cada coleccion se guardan en la carpeta `data_db/` en la ra
 | Herramienta | Version minima |
 |---|---|
 | Java JDK | 21 |
-| Apache Maven | 3.8+ |
+| NetBeans / IntelliJ / VS Code | Cualquier version reciente |
 
 ---
 
 ## Instalacion y ejecucion
 
-**1. Clonar el repositorio**
-```bash
-git clone https://github.com/tu-usuario/tu-repositorio.git
-cd tu-repositorio
+**1. Descargar el proyecto**
+
+Descarga el archivo `.zip` del repositorio desde GitHub haciendo clic en `Code` → `Download ZIP` y descomprimelo en la ubicacion que prefieras.
+
+**2. Importar en el IDE**
+
+- **NetBeans**: `File` → `Open Project` → selecciona la carpeta descomprimida → `Open Project`
+- **IntelliJ IDEA**: `File` → `Open` → selecciona la carpeta descomprimida → `OK`
+- **VS Code**: `File` → `Open Folder` → selecciona la carpeta descomprimida
+
+El IDE detectara automaticamente el proyecto Maven y descargara las dependencias necesarias.
+
+**3. Ejecutar el programa**
+
+Abre el archivo `Main.java` ubicado en `src/main/java/com/gestorbd/` y ejecutalo:
+
+- **NetBeans**: clic derecho sobre `Main.java` → `Run File`
+- **IntelliJ IDEA**: clic en el boton verde ▶ junto al metodo `main`
+- **VS Code**: clic en `Run` sobre el metodo `main`
+
+Al iniciar se abre la interfaz grafica automaticamente.
+
+---
+
+## Datos de prueba incluidos
+
+El proyecto incluye dos colecciones de ejemplo listas para usar en la carpeta `data_db/`:
+
+| Archivo | Coleccion | Campos |
+|---|---|---|
+| `prueba 1.json` | prueba 1 | nombre, edad, codigo |
+| `prueba 2.json` | prueba 2 | nombre, edad, codigo |
+
+Al abrir el programa estas colecciones ya apareceran disponibles en el selector. Para explorarlas selecciona una con el boton `USE` y prueba los comandos de busqueda:
+
 ```
-
-**2. Compilar el proyecto**
-```bash
-mvn compile
+USE prueba 1
+BUSCAR 1
+LISTAR_COLECCIONES
+BUSCAR_RANGO 1 5
+BUSCAR DONDE nombre = "valor"
 ```
-
-**3. Ejecutar las pruebas unitarias**
-```bash
-mvn test
-```
-
-**4. Ejecutar el programa**
-```bash
-mvn exec:java -Dexec.mainClass="com.gestorbd.Main"
-```
-
-O desde tu IDE (NetBeans, IntelliJ, VS Code) ejecutando directamente `Main.java`.
-
-Al iniciar, se abre la interfaz grafica. La carpeta `data_db/` se crea automaticamente si no existe.
 
 ---
 
@@ -120,13 +139,13 @@ OK: Coleccion 'usuarios' creada con exito.
 USE usuarios
 OK: Contexto cambiado a la coleccion: usuarios
 
-INSERTAR 1 {"nombre":"Juan","edad":25,"ciudad":"Bogota"}
+INSERTAR 1 {"nombre":"Juan","edad":25,"codigo":"EST001"}
 OK: Documento [1] insertado en el AVL y persistido.
 
-INSERTAR 2 {"nombre":"Ana","edad":30,"ciudad":"Medellin"}
+INSERTAR 2 {"nombre":"Ana","edad":30,"codigo":"EST002"}
 OK: Documento [2] insertado en el AVL y persistido.
 
-INSERTAR 3 {"nombre":"Pedro","edad":22,"ciudad":"Cali"}
+INSERTAR 3 {"nombre":"Pedro","edad":22,"codigo":"EST003"}
 OK: Documento [3] insertado en el AVL y persistido.
 ```
 
@@ -138,16 +157,16 @@ ID 1 ->
 {
   "nombre" : "Juan",
   "edad" : 25,
-  "ciudad" : "Bogota"
+  "codigo" : "EST001"
 }
 ```
 
 ### Buscar por campo exacto
 
 ```
-BUSCAR DONDE ciudad = "Bogota"
+BUSCAR DONDE nombre = "Juan"
 --- Resultados encontrados (1) ---
-ID 1 -> {"nombre":"Juan","edad":25,"ciudad":"Bogota"}
+ID 1 -> {"nombre":"Juan","edad":25,"codigo":"EST001"}
 ```
 
 ### Buscar por rango de IDs
@@ -155,14 +174,14 @@ ID 1 -> {"nombre":"Juan","edad":25,"ciudad":"Bogota"}
 ```
 BUSCAR_RANGO 1 2
 --- Documentos en rango [1 - 2] (ordenados por AVL) ---
-ID 1 -> {"nombre":"Juan","edad":25,"ciudad":"Bogota"}
-ID 2 -> {"nombre":"Ana","edad":30,"ciudad":"Medellin"}
+ID 1 -> {"nombre":"Juan","edad":25,"codigo":"EST001"}
+ID 2 -> {"nombre":"Ana","edad":30,"codigo":"EST002"}
 ```
 
 ### Actualizar un documento
 
 ```
-ACTUALIZAR 1 {"nombre":"Juan","edad":26,"ciudad":"Bogota"}
+ACTUALIZAR 1 {"nombre":"Juan","edad":26,"codigo":"EST001"}
 OK: Documento [1] actualizado con exito.
 ```
 
@@ -176,20 +195,20 @@ OK: Documento [3] eliminado del AVL y del archivo JSON.
 ### Trabajar con varias colecciones
 
 ```
-CREAR_COLECCION productos
-OK: Coleccion 'productos' creada con exito.
+CREAR_COLECCION docentes
+OK: Coleccion 'docentes' creada con exito.
 
-USE productos
-OK: Contexto cambiado a la coleccion: productos
+USE docentes
+OK: Contexto cambiado a la coleccion: docentes
 
-INSERTAR 1 {"nombre":"Laptop","precio":2500000,"stock":10}
+INSERTAR 1 {"nombre":"Carlos","edad":45,"codigo":"DOC001"}
 OK: Documento [1] insertado en el AVL y persistido.
 
 USE usuarios
 OK: Contexto cambiado a la coleccion: usuarios
 
 LISTAR_COLECCIONES
-Colecciones disponibles: [usuarios, productos]
+Colecciones disponibles: [usuarios, docentes, prueba 1, prueba 2]
 ```
 
 ---
@@ -200,8 +219,9 @@ Cada coleccion se guarda automaticamente en un archivo JSON dentro de la carpeta
 
 ```
 data_db/
-├── usuarios.json
-└── productos.json
+├── prueba 1.json
+├── prueba 2.json
+└── usuarios.json
 ```
 
 Al reiniciar el programa, todas las colecciones y sus documentos se restauran automaticamente desde estos archivos. El arbol AVL se reconstruye en memoria a partir de los datos persistidos.
