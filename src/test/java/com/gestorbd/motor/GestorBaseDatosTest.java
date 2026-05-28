@@ -61,4 +61,23 @@ public class GestorBaseDatosTest {
         assertEquals(1, admins.size());
         assertEquals("julian", admins.get(0).getDatos().get("user").asText());
     }
+    
+    @Test
+    void testActualizar() throws Exception {
+        gestor.guardar(new Documento(1, mapper.readTree("{\"nombre\":\"Juan\",\"edad\":25}")));
+        gestor.actualizar(new Documento(1, mapper.readTree("{\"nombre\":\"Juan\",\"edad\":26}")));
+
+        Optional<Documento> actualizado = gestor.buscarPorId(1);
+        assertTrue(actualizado.isPresent());
+        assertEquals(26, actualizado.get().getDatos().get("edad").asInt());
+    }
+
+    @Test
+    void testEliminar() throws Exception {
+        gestor.guardar(new Documento(1, mapper.readTree("{\"nombre\":\"Juan\",\"edad\":25}")));
+        boolean resultado = gestor.eliminarPorId(1);
+
+        assertTrue(resultado);
+        assertFalse(gestor.existePorId(1));
+    }
 }
