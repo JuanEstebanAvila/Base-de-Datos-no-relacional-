@@ -259,5 +259,5 @@ Donde `n` es el numero de documentos, `m` es el numero de resultados del rango y
 
 Desarrollado como proyecto academico para la asignatura de Ciencias de la Computacion I.
 
-Julian David Muñoz Revelo - 20251020042
-Juan Esteban Avila Trujillo - 20251020054
+- Julian David Muñoz Revelo - 20251020042
+- Juan Esteban Avila Trujillo - 20251020054
